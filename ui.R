@@ -15,6 +15,17 @@ ui= shinyUI(dashboardPage(
       selectizeInput(inputId = "Selection",
                      label = "Select item to Display",
                      choices = choice),
+      selectizeInput(inputId = "c_select",
+                     label = "Choose a company",
+                     choices = companies),
+      actionButton("update", "Change"),
+      hr(),
+      sliderInput(inputId = "freq",
+                  "Minimum Frequency:",
+                  min = 1, max = 50, value = 15),
+      sliderInput(inputId = "max",
+                  label = "Maximum Number of Words:",
+                  min = 1, max = 300, value = 100),
       sidebarMenu(
         menuItem("Source code", icon = icon("file-code-o"),href = "https://github.com/Andrlulu/Shiny_Project")
       )
@@ -32,7 +43,11 @@ ui= shinyUI(dashboardPage(
       ),
       
       tabItem(tabName = "wordcloud",
-              "to be replaced with wordcloud")
+              box(plotOutput("wcplot_sum")),
+              box(plotOutput('wcplot_pro')),
+              box(plotOutput('wcplot_con')),
+              box(plotOutput('wcplot_advice'))
+              )
     )
   )
 )
