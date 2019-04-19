@@ -18,10 +18,11 @@ review2 =
 # change the dates column to dates formate
 review3 = review2 %>% 
     mutate(., dates = trimws(dates, which = c('both'))) %>% 
-    mutate(., dates = as.Date(as.character(dates), '%b %d, %Y'))
+    mutate(dates = as.Date(as.character(dates), '%b %d, %Y')) %>% 
+    mutate(year = as.numeric(format(dates,'%Y'))) %>% 
+    mutate(month = as.character(format(dates, '%b')))
 
 # write cleaned dataframe into csv file
 write.csv(review3, file='review_data.csv', row.names=F)
 
-review3 %>% group_by(., company) %>% summarise(n = n())
 
