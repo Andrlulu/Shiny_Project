@@ -3,5 +3,5 @@ rsconnect/
 
 # Save data from R
 
-*.Rhistory
-*.RData
+.Rhistory
+.RData
