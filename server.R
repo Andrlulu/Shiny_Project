@@ -22,7 +22,7 @@ shinyServer(
       input$update
       isolate({
         withProgress({
-          setProgress(message = "Processing corpus...")
+          setProgress(message = "Processing corpus....")
           getTermMatrix_sum(input$c_select)
         })
       })
