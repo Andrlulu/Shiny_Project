@@ -1,0 +1,7 @@
+# Don't track content of these folders
+rsconnect/
+
+# Save data from R
+
+*.Rhistory
+*.RData

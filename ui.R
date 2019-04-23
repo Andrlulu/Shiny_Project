@@ -38,64 +38,72 @@ shinyUI(dashboardPage(skin = "green",
               fluidRow(infoBoxOutput("Anonymous_Response_Ratio"),
                        infoBoxOutput("Total_Response"),
                        infoBoxOutput("Top_Correlation")),
-              box(plotOutput("hist")),
-              box(plotOutput('corr')),
-              box(plotOutput('current_former')),
-              box(
-                title = "Inputs", status = 'warning', solidHeader = TRUE,
-                checkboxGroupInput(inputId = "checkCompany",
-                                   h3("company:"),
-                                   choices = list('google'='google',
-                                                  'amazon'= 'amazon',
-                                                  'facebook' = 'facebook',
-                                                  'netflix' = 'netflix',
-                                                  'apple' = 'apple',
-                                                  'microsoft' = 'microsoft'),
-                                   selected = c('google', 'amazon')),
-                
-                checkboxInput(inputId = "checkAnonymous",
-                              'Anonymous Response',
-                              value = FALSE)
+              fluidRow(
+                box(plotOutput("hist")),
+                box(plotOutput('corr')),
+                box(plotlyOutput('current_former')),
+                box(
+                  title = "Inputs", status = 'warning', solidHeader = TRUE,
+                  checkboxGroupInput(inputId = "checkCompany",
+                                     h3("company:"),
+                                     choices = list('google'='google',
+                                                    'amazon'= 'amazon',
+                                                    'facebook' = 'facebook',
+                                                    'netflix' = 'netflix',
+                                                    'apple' = 'apple',
+                                                    'microsoft' = 'microsoft'),
+                                     selected = c('google', 'amazon')),
+                  
+                  checkboxInput(inputId = "checkAnonymous",
+                                'Anonymous Response',
+                                value = FALSE)
+                )
               )
       ),
       
       tabItem(tabName = 'map',
-              box(htmlOutput('us_map')),
-              box(htmlOutput('world_map')),
-              box(
-                title = "Inputs", status = 'warning', solidHeader = TRUE,
-                checkboxGroupInput(inputId = "checkCompany1",
-                                   h3("company:"),
-                                   choices = list('google'='google',
-                                                  'amazon'= 'amazon',
-                                                  'facebook' = 'facebook',
-                                                  'netflix' = 'netflix',
-                                                  'apple' = 'apple',
-                                                  'microsoft' = 'microsoft'),
-                                   selected = c('google', 'amazon','facebook','netflix','apple','microsoft'))
-                
+              fluidRow(
+                box(htmlOutput('us_map')),
+                box(htmlOutput('world_map')),
+                box(
+                  title = "Inputs", status = 'warning', solidHeader = TRUE,
+                  checkboxGroupInput(inputId = "checkCompany1",
+                                     h3("company:"),
+                                     choices = list('google'='google',
+                                                    'amazon'= 'amazon',
+                                                    'facebook' = 'facebook',
+                                                    'netflix' = 'netflix',
+                                                    'apple' = 'apple',
+                                                    'microsoft' = 'microsoft'),
+                                     selected = c('google', 'amazon','facebook','netflix','apple','microsoft'))
+                  
+                )
               )
+
       ),
       
       tabItem(tabName = "Selection",
-              box(plotOutput("boxplot")),
-              box(plotOutput('time_rating')),
-              box(plotOutput('avg_rating')),
-              box(
-                title = "Inputs", status = 'warning', solidHeader = TRUE,
-                selectInput(inputId = "Selection", 
-                                 label = "Select item to Display", 
-                                 choices = choice)
-              )
+              fluidRow(
+                box(plotOutput("boxplot")),
+                box(plotOutput('time_rating')),
+                box(plotOutput('avg_rating')),
+                box(
+                  title = "Inputs", status = 'warning', solidHeader = TRUE,
+                  selectInput(inputId = "Selection", 
+                              label = "Select item to Display", 
+                              choices = choice)
+                )
+              )       
       ),
       
       tabItem(tabName = "wordcloud",
-              box(plotOutput("wcplot_sum")),
-              box(plotOutput('wcplot_pro')),
-              box(plotOutput('wcplot_con')),
-              box(plotOutput('wcplot_advice'))
+              fluidRow(
+                box(plotOutput("wcplot_sum")),
+                box(plotOutput('wcplot_pro')),
+                box(plotOutput('wcplot_con')),
+                box(plotOutput('wcplot_advice'))
+              )
       )
-      
     )
   )
 )

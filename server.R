@@ -116,13 +116,14 @@ shinyServer(
         gvisGeoChart(., 'country_code', 'number_review')
     })
     
-    output$current_former <- renderPlot(
+    output$current_former <- renderPlotly(
       data %>% 
         filter(is.anonymous == input$checkAnonymous) %>% 
         group_by(company, employee.status) %>% 
         summarise(n = n()) %>% 
         mutate(ratio = n/sum(n)) %>% 
         filter(company %in%  input$checkCompany) %>% 
+        ungroup(company) %>% 
         ggplot(., aes(x = employee.status, y = ratio, group = company)) +
         geom_col(position = 'dodge', aes(fill = company)) +
         labs(title = "Ratio comparsion between current and former employee",

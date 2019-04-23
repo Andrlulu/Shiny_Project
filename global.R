@@ -10,6 +10,7 @@ library(stringr)
 library(countrycode)
 library(DT)
 library(googleVis)
+library(plotly)
 
 
 
