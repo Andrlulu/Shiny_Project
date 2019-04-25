@@ -39,7 +39,7 @@ shinyUI(dashboardPage(skin = "green",
                        infoBoxOutput("Total_Response"),
                        infoBoxOutput("Top_Correlation")),
               fluidRow(
-                box(plotOutput("hist")),
+                box(plotlyOutput("hist")),
                 box(plotOutput('corr')),
                 box(plotlyOutput('current_former')),
                 box(
@@ -84,9 +84,9 @@ shinyUI(dashboardPage(skin = "green",
       
       tabItem(tabName = "Selection",
               fluidRow(
-                box(plotOutput("boxplot")),
-                box(plotOutput('time_rating')),
-                box(plotOutput('avg_rating')),
+                box(plotlyOutput("boxplot")),
+                box(plotlyOutput('time_rating')),
+                box(plotlyOutput('avg_rating')),
                 box(
                   title = "Inputs", status = 'warning', solidHeader = TRUE,
                   selectInput(inputId = "Selection", 

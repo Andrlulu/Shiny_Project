@@ -1,0 +1,10 @@
+
+-Do an analysis on group_by(current, former, position)
+
+-Present more into data analysis.
+
+-Anonymous check box fix
+
+-wordcloud c, multi plot
+
+-Improve the layout of my project, think like I am creating an app for an user. A better story telling line.

@@ -22,7 +22,8 @@ shinyServer(
       input$update
       isolate({
         withProgress({
-          setProgress(message = "Processing corpus....")
+          setProgress(message = "Processing corpus....
+                      ")
           getTermMatrix_sum(input$c_select)
         })
       })
@@ -30,9 +31,11 @@ shinyServer(
     
     wc_data_pro = reactive({
       input$update
+      
       isolate({
         withProgress({
-          setProgress(message = "Processing corpus...")
+          setProgress(message = "Processing corpus....
+                      ")
           getTermMatrix_pro(input$c_select)
         })
       })
@@ -60,13 +63,14 @@ shinyServer(
     
 # Make the wordcloud drawing predictable during a session
     wordcloud_rep = repeatable(wordcloud)
+    
     output$wcplot_sum = renderPlot({
 
       v1 = wc_data_sum()
       wordcloud_rep(names(v1), v1, rot.per = 0.3,
-                    min.freq = input$freq, 
-                    max.words = input$max, 
-                    colors = brewer.pal(8,"Dark2")) 
+                    min.freq = input$freq,
+                    max.words = input$max,
+                    colors = brewer.pal(8,"Dark2"))
       title(main="Word Cloud - Column Summary")
     })
     
@@ -81,16 +85,16 @@ shinyServer(
     
     output$wcplot_con = renderPlot({
       v3 = wc_data_con()
-      wordcloud_rep(names(v3), v3, rot.per = 0.3, 
-                    min.freq = input$freq, max.words = input$max, 
+      wordcloud_rep(names(v3), v3, rot.per = 0.3,
+                    min.freq = input$freq, max.words = input$max,
                     colors = brewer.pal(8,"Dark2"))
       title(main="Word Cloud - Column Cons")
     })
-    
+
     output$wcplot_advice = renderPlot({
       v4 = wc_data_advice()
-      wordcloud_rep(names(v4), v4, rot.per = 0.3, 
-                    min.freq = input$freq, max.words = input$max, 
+      wordcloud_rep(names(v4), v4, rot.per = 0.3,
+                    min.freq = input$freq, max.words = input$max,
                     colors = brewer.pal(8,"Dark2"))
       title(main="Word Cloud - Column Advice to Management")
     })
@@ -133,10 +137,11 @@ shinyServer(
         theme(legend.key = element_blank())
     )
     
-    output$time_rating <- renderPlot(
+    output$time_rating <- renderPlotly(
       r_time_rating() %>%
         group_by(year, company) %>% 
         summarise(avg = mean(get(input$Selection))) %>% 
+        ungroup(company) %>% 
         ggplot(., aes(x = year, y = avg)) +
         geom_line(aes(color = company), size = 2) +
         labs(title = "Averge rating over time",
@@ -145,10 +150,11 @@ shinyServer(
         theme_bw()
     )
     
-    output$avg_rating <- renderPlot(
+    output$avg_rating <- renderPlotly(
       r_time_rating() %>% 
         group_by(company) %>% 
         summarise(avg = mean(get(input$Selection))) %>% 
+        ungroup(company) %>% 
         ggplot(., aes(x = reorder(company, + avg), avg)) +
         geom_bar(stat = 'identity', colour = 'black', aes(fill = company))+
         coord_flip()+
@@ -160,10 +166,11 @@ shinyServer(
     )
     
     
-    output$boxplot <- renderPlot(
+    output$boxplot <- renderPlotly(
       data %>% 
         filter(get(input$Selection) != 'none') %>% 
         group_by(company) %>% 
+        ungroup(company) %>% 
         ggplot(aes(x = company, y = get(input$Selection))) +
         geom_boxplot(aes(group = company, fill = company)) +
         coord_flip() +
@@ -173,10 +180,11 @@ shinyServer(
         theme_bw()
     )
     
-    output$hist <- renderPlot(
+    output$hist <- renderPlotly(
       data %>% 
         group_by(., company) %>% 
         summarise(., count = n() ) %>% 
+        ungroup(company) %>% 
         ggplot(aes(x = reorder(company, -count), y = count)) + 
         geom_col(aes(fill = company)) +
         labs(title = "Review count by company",

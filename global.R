@@ -58,7 +58,7 @@ data_map =
 
 # wordcloud:
 getTermMatrix_sum = memoise(function(comp){
-  
+
   summary = data %>% select(company,summary) %>% filter(company == comp)
   corpus_sum = Corpus(VectorSource(summary$summary))
   corpus_sum = tm_map(corpus_sum, content_transformer(tolower))
@@ -68,6 +68,7 @@ getTermMatrix_sum = memoise(function(comp){
   corpus_sum = tm_map(corpus_sum, stripWhitespace)
   corpus_sum = tm_map(corpus_sum, removeWords,c("get","told","gave","took","can", "could"))
   tdm_sum= TermDocumentMatrix(corpus_sum,control = list(minWordLength = 1))
+  tdm_sum = removeSparseTerms(tdm_sum, 0.9)
   m_sum= as.matrix(tdm_sum)
   sort(rowSums(m_sum), decreasing = TRUE)
 })
@@ -83,12 +84,13 @@ getTermMatrix_pro = memoise(function(comp){
   corpus_pro = tm_map(corpus_pro, stripWhitespace)
   corpus_pro = tm_map(corpus_pro, removeWords,c("get","told","gave","took","can", "could"))
   tdm_pro = TermDocumentMatrix(corpus_pro,control = list(minWordLength = 1))
+  tdm_pro = removeSparseTerms(tdm_pro, 0.9)
   m_pro = as.matrix(tdm_pro)
   sort(rowSums(m_pro), decreasing = TRUE)
 })
 
 getTermMatrix_con = memoise(function(comp){
-  
+
   con = data %>% select(company,cons) %>% filter(company == comp)
   corpus_con = Corpus(VectorSource(con$cons))
   corpus_con = tm_map(corpus_con, content_transformer(tolower))
@@ -98,12 +100,13 @@ getTermMatrix_con = memoise(function(comp){
   corpus_con = tm_map(corpus_con, stripWhitespace)
   corpus_con = tm_map(corpus_con, removeWords,c("get","told","gave","took","can", "could"))
   tdm_con = TermDocumentMatrix(corpus_con,control = list(minWordLength = 1))
+  tdm_con = removeSparseTerms(tdm_con, 0.9)
   m_con = as.matrix(tdm_con)
   sort(rowSums(m_con), decreasing = TRUE)
 })
 
 getTermMatrix_advice = memoise(function(comp){
-  
+
   advice.to.mgmt = data %>% select(company,advice.to.mgmt) %>% filter(advice.to.mgmt != 'none', company == comp)
   corpus_advice = Corpus(VectorSource(advice.to.mgmt$advice.to.mgmt))
   corpus_advice = tm_map(corpus_advice, content_transformer(tolower))
@@ -113,6 +116,7 @@ getTermMatrix_advice = memoise(function(comp){
   corpus_advice = tm_map(corpus_advice, stripWhitespace)
   corpus_advice = tm_map(corpus_advice, removeWords,c("get","told","gave","took","can", "could"))
   tdm_advice = TermDocumentMatrix(corpus_advice, control = list(minWordLength = 1))
+  tdm_advice = removeSparseTerms(tdm_advice, 0.9)
   m_advice = as.matrix(tdm_advice)
   sort(rowSums(m_advice), decreasing = TRUE)
 })
